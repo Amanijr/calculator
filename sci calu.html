@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator</title>
+    <link rel="stylesheet" href="cal.css">
+</head>
+<body>
+    <center>
+    <div class="container">
+        <h1>Scientific Calculator</h1>
+        <div class="calculator">
+            <input type="text" placeholder="0" id="output-screen">
+            <button onclick="remv()">CLR</button>
+            <button onclick="del()">DEL</button>
+            <button onclick="display('%')">%</button>
+            <button onclick="display('/')">/</button>
+            <button onclick="display('+')">+</button> 
+            <button onclick="display('-')">-</button>
+            <button onclick="display('*')">*</button>
+            <button onclick="display('.')">.</button>
+            <button onclick="sin()">sin</button>
+            <button onclick="cos()">cos</button>
+            <button onclick="tan()">tan</button>
+            <button onclick="mod()">mod</button>
+            <button onclick="sinh()">sinh</button>
+            <button onclick="cosh()">cosh</button>
+            <button onclick="tanh()">tanh</button>
+            <button onclick="exp()">exp</button>
+            <button onclick="ln()">ln</button>
+            <button onclick="log()">log</button>
+            <button onclick="asin()">asin</button>
+            <button onclick="acos()">acos</button>
+            <button onclick="atan()">atan</button>
+            <button onclick="toggleMode()">Deg/Rad</button>
+            <button onclick="sqrt()">√</button>
+            <button onclick="pow()">^</button>
+            <button onclick="root()">root</button>
+            <button onclick="display('7')">7</button>
+            <button onclick="display('8')">8</button>
+            <button onclick="display('9')">9</button>
+            <button onclick="display('4')">4</button>
+            <button onclick="display('5')">5</button>
+            <button onclick="display('6')">6</button>
+            <button onclick="display('1')">1</button>
+            <button onclick="display('2')">2</button>
+            <button onclick="display('3')">3</button>
+            <button onclick="display('0')">0</button>
+            <button onclick="calculate()" class="equal">=</button>
+        </div>
+    </div>
+    <script>
+        let outputscreen = document.getElementById("output-screen");
+        let isDegreeMode = true;
+
+        function display(num) {
+            outputscreen.value += num;
+        }
+
+        function calculate() {
+            try {
+                outputscreen.value = eval(outputscreen.value);
+            } catch (err) {
+                alert("Invalid");
+            }
+        }
+
+        function remv() {
+            outputscreen.value = '';
+        }
+
+        function del() {
+            outputscreen.value = outputscreen.value.slice(0, -1);
+        }
+
+        function sin() {
+            outputscreen.value = Math.sin(convertToRadians(outputscreen.value));
+        }
+
+        function cos() {
+            outputscreen.value = Math.cos(convertToRadians(outputscreen.value));
+        }
+
+        function tan() {
+            outputscreen.value = Math.tan(convertToRadians(outputscreen.value));
+        }
+
+        function asin() {
+            outputscreen.value = convertToDegrees(Math.asin(outputscreen.value));
+        }
+
+        function acos() {
+            outputscreen.value = convertToDegrees(Math.acos(outputscreen.value));
+        }
+
+        function atan() {
+            outputscreen.value = convertToDegrees(Math.atan(outputscreen.value));
+        }
+
+        function mod() {
+            let expression = outputscreen.value;
+            let parts = expression.split('%');
+            if (parts.length === 2) {
+                let result = parseFloat(parts[0]) % parseFloat(parts[1]);
+                outputscreen.value = result;
+            } else {
+                alert("Invalid expression for modulus");
+            }
+        }
+
+        function sinh() {
+            outputscreen.value = Math.sinh(outputscreen.value);
+        }
+
+        function cosh() {
+            outputscreen.value = Math.cosh(outputscreen.value);
+        }
+
+        function tanh() {
+            outputscreen.value = Math.tanh(outputscreen.value);
+        }
+
+        function exp() {
+            outputscreen.value = Math.exp(outputscreen.value);
+        }
+
+        function ln() {
+            outputscreen.value = Math.log(outputscreen.value);
+        }
+
+        function log() {
+            outputscreen.value = Math.log10(outputscreen.value);
+        }
+
+        function sqrt() {
+            outputscreen.value = Math.sqrt(outputscreen.value);
+        }
+
+        function pow() {
+            let base = prompt("Enter the base value:");
+            let exponent = prompt("Enter the exponent value:");
+            if (!isNaN(base) && !isNaN(exponent)) {
+                outputscreen.value = Math.pow(base, exponent);
+            } else {
+                alert("Invalid input for power calculation");
+            }
+        }
+
+        function root() {
+            let value = prompt("Enter the value:");
+            let root = prompt("Enter the root value:");
+            if (!isNaN(value) && !isNaN(root)) {
+                outputscreen.value = Math.pow(value, 1 / root);
+            } else {
+                alert("Invalid input for root calculation");
+            }
+        }
+
+        function toggleMode() {
+            isDegreeMode = !isDegreeMode;
+            alert("Mode switched to " + (isDegreeMode ? "Degrees" : "Radians"));
+        }
+
+        function convertToRadians(value) {
+            return isDegreeMode ? value * Math.PI / 180 : value;
+        }
+
+        function convertToDegrees(value) {
+            return isDegreeMode ? value * 180 / Math.PI : value;
+        }
+    </script>
+    </center>
+</body>
+</html>
